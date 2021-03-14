@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -44,10 +45,7 @@ public class DataServlet extends HttpServlet {
         try {
             dataService.deleteUser(id);
             LOG.info(String.format(LOG_USER_DELETED, id));
-        } catch (IllegalIDException e) {
-            LOG.warning(e.getMessage());
-            resp.setStatus(400);
-        } catch (Exception e) {
+        } catch (IllegalIDException | SQLException e) {
             LOG.warning(e.getMessage());
             resp.setStatus(400);
         }

@@ -5,10 +5,10 @@ import com.kaptsiug.db.DataProvider;
 import com.kaptsiug.exception.IllegalIDException;
 import com.kaptsiug.model.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class DataService {
-    public static final String MSG_ID_ILLEGAL_INPUT = "Illegal input of User ID";
     private final DataProvider dataProvider;
     private final Gson gson;
 
@@ -27,19 +27,15 @@ public class DataService {
         dataProvider.addUser(user);
     }
 
-    public void deleteUser(String id) throws IllegalIDException {
+    public void deleteUser(String id) throws IllegalIDException, SQLException {
         char[] chars = id.toCharArray();
         for (char ch : chars) {
             if (!Character.isDigit(ch)) {
-                throw new IllegalIDException(MSG_ID_ILLEGAL_INPUT);
+                throw new IllegalIDException();
             }
         }
         int userID = Integer.parseInt(id);
-        try {
-            dataProvider.deleteUserByID(userID);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        dataProvider.deleteUserByID(userID);
 
     }
 }

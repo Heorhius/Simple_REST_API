@@ -30,11 +30,11 @@ public class DataProvider {
              Statement statement = connection.createStatement();
              final ResultSet rs = statement.executeQuery(QUERY_SELECT_ALL_USERS);) {
             while (rs.next()) {
-                User user = new User(rs.getInt("id")
-                        , rs.getString("firstName")
-                        , rs.getString("login")
-                        , rs.getString("password")
-                        , rs.getInt("age"));
+                User user = new User(rs.getInt("id"),
+                        rs.getString("firstName"),
+                        rs.getString("login"),
+                        rs.getString("password"),
+                        rs.getInt("age"));
                 users.add(user);
             }
         } catch (SQLException ex) {
@@ -56,13 +56,11 @@ public class DataProvider {
         }
     }
 
-    public void deleteUserByID(int id) throws Exception {
+    public void deleteUserByID(int id) throws SQLException {
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement pStatement = connection.prepareStatement(QUERY_DELETE_USER_BY_ID);) {
             pStatement.setInt(1, id);
             pStatement.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
         }
     }
 
